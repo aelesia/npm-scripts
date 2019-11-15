@@ -1,0 +1,22 @@
+{
+  "name": "@jaslyn-siliconjungles/increment-version",
+  "version": "0.1.0",
+  "description": "Increments Android & iOS build number & version name",
+  "bin": {
+    "increment-version": "./index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "jaslyn@siliconjungles",
+  "license": "ISC",
+  "dependencies": {
+    "@typescript-eslint/eslint-plugin": "^2.7.0",
+    "@typescript-eslint/parser": "^2.7.0"
+  },
+  "devDependencies": {
+    "@types/node": "^12.12.7",
+    "eslint": "^6.6.0",
+    "typescript": "^3.7.2"
+  }
+}
