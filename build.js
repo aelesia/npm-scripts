@@ -15,16 +15,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const utils_1 = __importDefault(require("./utils"));
 function build_with_password(password) {
     return __awaiter(this, void 0, void 0, function* () {
-        // await Utils.dir_sh('root', 'npx jetify')
-        // await Utils.dir_sh('android', `./gradlew bundleRelease -pPassword=${password}`)
-        yield utils_1.default.sh('npx', ['jetify']);
+        yield utils_1.default.dir_sh('root', 'npx jetify');
+        yield utils_1.default.dir_sh('android', `./gradlew clean bundleRelease -Ppassword=${password}`);
     });
 }
 (function () {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            // let password: string = Utils.argv('password')
-            yield build_with_password('password');
+            let password = utils_1.default.argv('password');
+            yield build_with_password(password);
             process.exit(0);
         }
         catch (e) {
