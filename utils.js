@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const child_process_1 = require("child_process");
 class Utils {
     static argv(key) {
         let value = null;
@@ -36,6 +37,12 @@ class Utils {
         catch (e) {
             throw Error(`${key}:${value} must be a number.`);
         }
+    }
+    static sh_s(command, args) {
+        return child_process_1.spawnSync(command, args).stdout.toString();
+    }
+    static sh_i(command, args) {
+        return parseInt(child_process_1.spawnSync(command, args).stdout.toString());
     }
 }
 exports.default = Utils;

@@ -1,3 +1,5 @@
+import {spawnSync} from "child_process"
+
 export default class Utils {
 	static argv(key: string): string {
 		let value: string | number | boolean | null = null
@@ -33,5 +35,13 @@ export default class Utils {
 		} catch(e) {
 			throw Error(`${key}:${value} must be a number.`)
 		}
+	}
+
+	static sh_s(command: string, args: string[]): string {
+		return spawnSync(command, args).stdout.toString()
+	}
+
+	static sh_i(command: string, args: string[]): number {
+		return parseInt(spawnSync(command, args).stdout.toString())
 	}
 }

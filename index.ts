@@ -3,16 +3,12 @@ import Utils from './utils'
 
 const { spawnSync } = require('child_process')
 
-
-// spawnSync('git', ['clone', url, `${process.cwd()}/${appName}`]);
-// spawnSync('echo', ['hello'])
-// spawnSync('mkdir', ['heheheehehe'])
-
-// const appName = process.argv[2];
-// console.log(process.argv[0])
-// console.log(process.argv[1])
-// console.log(process.argv[2])
-
+function version_from_git(): number {
+	let total_commits = Utils.sh_i('git', ['rev-list', '--count', 'HEAD'])
+	let branch_commits_from_dev = Utils.sh_i('git', ['rev-list', '--count', 'origin/develop..HEAD'])
+	let dev_commits = total_commits - branch_commits_from_dev
+	return dev_commits*1000 + branch_commits_from_dev
+}
 
 function write_gradle(file_path: string, build_number: number, version_name: string) {
 	let file =
@@ -34,7 +30,7 @@ try {
 	let xcode_path: string = Utils.argv('xcode_path')
 	let gradle_path: string = Utils.argv_null('gradle_path') || 'android/app/build.gradle'
 	let version_name: string = Utils.argv('version_name')
-	let build_number: number = Utils.argv_number('build_number')
+	let build_number: number = Utils.argv_null('build_number') === 'git' ? version_from_git() : Utils.argv_number('build_number')
 
 	write_xcode(xcode_path, build_number, version_name)
 	write_gradle(gradle_path, build_number, version_name)

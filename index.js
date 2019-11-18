@@ -13,13 +13,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const fs = __importStar(require("fs"));
 const utils_1 = __importDefault(require("./utils"));
 const { spawnSync } = require('child_process');
-// spawnSync('git', ['clone', url, `${process.cwd()}/${appName}`]);
-// spawnSync('echo', ['hello'])
-// spawnSync('mkdir', ['heheheehehe'])
-// const appName = process.argv[2];
-// console.log(process.argv[0])
-// console.log(process.argv[1])
-// console.log(process.argv[2])
+function version_from_git() {
+    let total_commits = utils_1.default.sh_i('git', ['rev-list', '--count', 'HEAD']);
+    let branch_commits_from_dev = utils_1.default.sh_i('git', ['rev-list', '--count', 'origin/develop..HEAD']);
+    let dev_commits = total_commits - branch_commits_from_dev;
+    return dev_commits * 1000 + branch_commits_from_dev;
+}
 function write_gradle(file_path, build_number, version_name) {
     let file = fs.readFileSync(file_path, 'utf-8')
         .replace(/versionCode ([\d]+)?/g, `versionCode ${build_number}`)
@@ -36,7 +35,7 @@ try {
     let xcode_path = utils_1.default.argv('xcode_path');
     let gradle_path = utils_1.default.argv_null('gradle_path') || 'android/app/build.gradle';
     let version_name = utils_1.default.argv('version_name');
-    let build_number = utils_1.default.argv_number('build_number');
+    let build_number = utils_1.default.argv_null('build_number') === 'git' ? version_from_git() : utils_1.default.argv_number('build_number');
     write_xcode(xcode_path, build_number, version_name);
     write_gradle(gradle_path, build_number, version_name);
     console.log(`Updated xcode & gradle with [build_number: ${build_number}, version_name: ${version_name}]`);
