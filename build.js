@@ -13,7 +13,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const utils_1 = __importDefault(require("./utils"));
-function build_with_password(password) {
+function build_apk(password) {
+    return __awaiter(this, void 0, void 0, function* () {
+        yield utils_1.default.dir_sh('root', 'npx jetify');
+        yield utils_1.default.dir_sh('android', `./gradlew clean assembleRelease -Ppassword=${password}`);
+    });
+}
+function build_bundle(password) {
     return __awaiter(this, void 0, void 0, function* () {
         yield utils_1.default.dir_sh('root', 'npx jetify');
         yield utils_1.default.dir_sh('android', `./gradlew clean bundleRelease -Ppassword=${password}`);
@@ -23,11 +29,13 @@ function build_with_password(password) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             let password = utils_1.default.argv('password');
-            yield build_with_password(password);
+            yield build_bundle(password);
             process.exit(0);
         }
         catch (e) {
-            console.log('ERROR: ' + e.message);
+            if (e) {
+                console.log('ERROR: ' + e.message);
+            }
             process.exit(1);
         }
     });
