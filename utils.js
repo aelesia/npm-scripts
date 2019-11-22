@@ -26,7 +26,7 @@ class Utils {
             throw Error(`Required parameter '${key}' not found. Please re-run with '[command] ${key}:[value]'`);
     }
     static argv_null(key) {
-        let value = null;
+        let value = undefined;
         process.argv.forEach((arg, index, array) => {
             let k = arg.split(':')[0];
             let v = arg.split(':')[1];
@@ -47,14 +47,27 @@ class Utils {
             throw Error(`${key}:${value} must be a number.`);
         }
     }
+    static argv_number_null(key) {
+        let value = this.argv_null(key);
+        if (value == null)
+            return undefined;
+        let number;
+        try {
+            number = parseInt(value);
+            return number;
+        }
+        catch (e) {
+            throw Error(`${key}:${value} must be a number.`);
+        }
+    }
     static sh_s(command, args) {
-        return child_process_1.spawnSync(command, args).stdout.toString();
+        return child_process_1.spawnSync(command, args).stdout.toString().replace('\n', '');
     }
     static sh_i(command, args) {
         return parseInt(child_process_1.spawnSync(command, args).stdout.toString());
     }
     static pwd() {
-        return Utils.sh_s('pwd').replace('\n', '');
+        return Utils.sh_s('pwd');
     }
     static sh_2(command, options) {
         return __awaiter(this, void 0, void 0, function* () {

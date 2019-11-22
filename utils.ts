@@ -14,8 +14,8 @@ export default class Utils {
 		else throw Error(`Required parameter '${key}' not found. Please re-run with '[command] ${key}:[value]'`)
 	}
 
-	static argv_null(key: string): string | null {
-		let value: string | number | boolean | null = null
+	static argv_null(key: string): string | undefined {
+		let value: string | number | boolean | undefined = undefined
 		process.argv.forEach((arg: string, index: number, array) => {
 			let k = arg.split(':')[0]
 			let v = arg.split(':')[1]
@@ -37,8 +37,20 @@ export default class Utils {
 		}
 	}
 
+	static argv_number_null(key: string): number | undefined {
+		let value = this.argv_null(key)
+		if (value == null) return undefined
+		let number
+		try {
+			number = parseInt(value)
+			return number
+		} catch(e) {
+			throw Error(`${key}:${value} must be a number.`)
+		}
+	}
+
 	static sh_s(command: string, args?: string[]): string {
-		return spawnSync(command, args).stdout.toString()
+		return spawnSync(command, args).stdout.toString().replace('\n', '')
 	}
 
 	static sh_i(command: string, args?: string[]): number {
@@ -46,7 +58,7 @@ export default class Utils {
 	}
 
 	static pwd(): string {
-		return Utils.sh_s('pwd').replace('\n', '')
+		return Utils.sh_s('pwd')
 	}
 
 	static async sh_2(command: string, options?: SpawnSyncOptions): Promise<null> {
@@ -69,7 +81,6 @@ export default class Utils {
 			})
 		})
 	}
-
 
 	static async dir_sh(location: 'android' | 'ios' | 'root', command: string): Promise<null> {
 		let pwd = Utils.pwd()
