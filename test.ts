@@ -1,11 +1,12 @@
 import * as fs from 'fs'
-import Utils from './lib/utils'
-import Project from './lib/project'
-import Tools from './lib/tools'
+import Arg from './lib/Arg'
+import Project from './lib/Project'
+import Tools from './lib/Tools'
+import Shell from "./lib/Shell"
 
 
 function find_path(relative_path: string): string {
-	let pwd = Utils.pwd()
+	let pwd = Shell.pwd()
 
 	if (pwd.includes(relative_path)) {
 		if (pwd.endsWith(relative_path)) {
@@ -28,7 +29,7 @@ function find_path(relative_path: string): string {
 
 const { spawnSync } = require('child_process')
 try {
-	console.log(find_path(Utils.argv('path')))
+	console.log(find_path(Arg.v('path')))
 	process.exit(0)
 } catch(e) {
 	// console.error(e.stack)

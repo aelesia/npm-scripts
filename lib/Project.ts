@@ -1,5 +1,5 @@
 import * as fs from 'fs'
-import Utils from './utils'
+import Shell from './Shell'
 
 export default class Project {
 	static write_gradle(file_path: string, build_number?: number, version_name?: string) {
@@ -31,7 +31,7 @@ export default class Project {
 	}
 
 	static find_xcode_proj(): string {
-		let path = Utils.sh_s('find', ['ios', '-type', 'f', '-name', 'project.pbxproj'])
+		let path = Shell.sh_s('find', ['ios', '-type', 'f', '-name', 'project.pbxproj'])
 		if (path.includes('project.pbxproj'))
 			return path
 		else

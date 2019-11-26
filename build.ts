@@ -1,9 +1,9 @@
-import Utils from './lib/utils'
-import Build from './lib/build'
+import Arg from './lib/Arg'
+import Build from './lib/Build'
 
 (async function() {
 	try {
-		let password: string = Utils.argv('password')
+		let password: string = Arg.v('password')
 
 		await Build.build_bundle(password)
 		process.exit(0)

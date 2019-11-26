@@ -12,13 +12,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const utils_1 = __importDefault(require("./lib/utils"));
-const build_1 = __importDefault(require("./lib/build"));
+const Arg_1 = __importDefault(require("./lib/Arg"));
+const Build_1 = __importDefault(require("./lib/Build"));
 (function () {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            let password = utils_1.default.argv('password');
-            yield build_1.default.build_bundle(password);
+            let password = Arg_1.default.v('password');
+            yield Build_1.default.build_bundle(password);
             process.exit(0);
         }
         catch (e) {

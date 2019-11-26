@@ -1,11 +1,12 @@
 import * as fs from 'fs'
-import Utils from './lib/utils'
+import Arg from './lib/Arg'
+import Shell from "./lib/Shell"
 
 const { spawnSync } = require('child_process')
 
 function version_from_git(): number {
-	let total_commits = Utils.sh_i('git', ['rev-list', '--count', 'HEAD'])
-	let branch_commits_from_dev = Utils.sh_i('git', ['rev-list', '--count', 'origin/develop..HEAD'])
+	let total_commits = Shell.sh_i('git', ['rev-list', '--count', 'HEAD'])
+	let branch_commits_from_dev = Shell.sh_i('git', ['rev-list', '--count', 'origin/develop..HEAD'])
 	let dev_commits = total_commits - branch_commits_from_dev
 	return dev_commits*1000 + branch_commits_from_dev
 }

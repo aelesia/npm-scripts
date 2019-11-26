@@ -3,9 +3,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const utils_1 = __importDefault(require("./lib/utils"));
+const Arg_1 = __importDefault(require("./lib/Arg"));
+const Shell_1 = __importDefault(require("./lib/Shell"));
 function find_path(relative_path) {
-    let pwd = utils_1.default.pwd();
+    let pwd = Shell_1.default.pwd();
     if (pwd.includes(relative_path)) {
         if (pwd.endsWith(relative_path)) {
             return pwd;
@@ -27,7 +28,7 @@ function find_path(relative_path) {
 }
 const { spawnSync } = require('child_process');
 try {
-    console.log(find_path(utils_1.default.argv('path')));
+    console.log(find_path(Arg_1.default.v('path')));
     process.exit(0);
 }
 catch (e) {
