@@ -1,6 +1,8 @@
 import * as fs from 'fs'
 import Utils from './lib/utils'
 import Project from "./lib/project"
+import Tools from "./lib/tools"
+import build from "./lib/build"
 
 const { spawnSync } = require('child_process')
 
@@ -35,6 +37,9 @@ try {
 	let gradle_path: string = Utils.argv_null('gradle_path') || 'android/app/build.gradle'
 	let version_name: string | undefined = Utils.argv_null('version_name')
 	let build_number: number | undefined = Utils.argv_number_null('build_number')
+
+	build_number = Tools.version_from_git()
+	version_name = Tools.version_from_package()
 
 	Project.write_xcode(xcode_path, build_number, version_name)
 	Project.write_gradle(gradle_path, build_number, version_name)

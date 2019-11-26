@@ -11,7 +11,10 @@ export default class Tools {
 
 	static version_from_package(): string {
 		let file = fs.readFileSync('package.json', 'utf-8')
-		console.log(file)
-		throw Error('Not implemented yet')
+		let pkg = JSON.parse(file)
+		if (!pkg.version) {
+			throw Error('No version defined in package.json')
+		}
+		return pkg.version
 	}
 }
