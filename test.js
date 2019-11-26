@@ -22,6 +22,7 @@ function find_path(relative_path) {
     }
     // 2A Path exists in current path
     // 2B Path doesn't exist in current path
+    throw Error('Not Implemented Yet');
 }
 const { spawnSync } = require('child_process');
 try {
@@ -29,7 +30,7 @@ try {
     // let gradle_path: string = Utils.argv_null('gradle_path') || 'android/app/build.gradle'
     // let version_name: string | undefined = Utils.argv_null('version_name')
     // let build_number: number | undefined = Utils.argv_number_null('build_number')
-    find_path();
+    find_path('');
     console.log(tools_1.default.version_from_package());
     process.exit(0);
 }

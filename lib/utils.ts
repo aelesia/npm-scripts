@@ -1,6 +1,27 @@
 import {spawn, spawnSync, SpawnSyncOptions, SpawnSyncReturns} from 'child_process'
 
 export default class Utils {
+	static argv_enum(key: string, accepted_values: string[]): string {
+		let value = this.argv(key)
+		let abc = accepted_values.find((it)=>{
+			return it.toLowerCase() === value.toLowerCase()
+		})
+		if (value) return value
+		else throw Error(`Invalid value: ${value}. Accepted values: ${accepted_values}`)
+	}
+
+	static argv_enum_null(key: string, accepted_values: string[]): string | undefined {
+		let value: string | undefined = this.argv_null(key)
+		if (value === undefined) return value
+
+		let find = accepted_values.find((it)=>{
+			// @ts-ignore value should always be string
+			return it.toLowerCase() === value.toLowerCase()
+		})
+		if (find) return value
+		else throw Error(`Invalid value: ${value}. Accepted values: [${accepted_values}]`)
+	}
+
 	static argv(key: string): string {
 		let value: string | number | boolean | null = null
 		process.argv.forEach((arg: string, index: number, array) => {
