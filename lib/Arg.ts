@@ -32,7 +32,7 @@ export default class Arg {
 			}
 		})
 		if (value) return value
-		else throw Error(`Required parameter '${key}' not found. Please re-run with '[command] ${key}:[value]'`)
+		else throw Error(`Required parameter '${key}' not found. Please re-run command with '${key}:[value]'`)
 	}
 
 	static v_null(key: string): string | undefined {

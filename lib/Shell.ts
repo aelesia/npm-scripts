@@ -72,4 +72,47 @@ export default class Shell {
 				throw Error(`Invalid location type: ${location}`)
 		}
 	}
+
+	static find_path(relative_path: string): string {
+		let pwd = Shell.pwd()
+
+		if (relative_path === '(root)') {
+			let nested = pwd.split('/').length
+			for (let i=0; i<nested; i++) {
+				let cwd = '.' + '/..'.repeat(i)
+				if (this.is_root_node_dir({cwd})) {
+					let a = pwd.split('/')
+					let b = ''
+					for (let j=0; j<nested-i; j++) {
+						b += a[j] + '/'
+					}
+					b = b.slice(0, b.length-1)
+					return b
+				}
+			}
+			throw Error(`Unable to locate package.json in ancestors of '${pwd}'`)
+		}
+
+		else if (pwd.includes(relative_path)) {
+			if (pwd.endsWith(relative_path)) {
+				return pwd
+			} else {
+				let start = pwd.indexOf(relative_path)
+				let end = start+relative_path.length
+				return pwd.slice(0, end)
+			}
+		}
+
+		else {
+			if (spawnSync('test', ['-d', relative_path]).status === 0) {
+				return pwd + '/' + relative_path
+			} else {
+				throw Error(`Path: '${relative_path}' cannot be found in '${pwd}'`)
+			}
+		}
+	}
+
+	static is_root_node_dir(options?: SpawnSyncOptions): boolean {
+		return spawnSync('test', ['-f', 'package.json'], options).status === 0
+	}
 }
