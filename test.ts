@@ -34,10 +34,11 @@ import Build from "./lib/Build"
 		// let password: string = Arg.v('password')
 
 		// await Build.build_bundle(password)
-		console.log(Shell.find_path('(root)'))
+		// console.log(Shell.find_path('(root)'))
+		console.log(Tools.version_from_git())
 		process.exit(0)
 	} catch(e) {
-		console.log('ERROR: ' + e?.message)
+		console.log('ERROR: ' + e.message)
 		process.exit(1)
 	}
 }())
