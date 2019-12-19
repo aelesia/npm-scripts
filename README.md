@@ -1,10 +1,6 @@
-    node ../../scripts/increment_android_ios_version/index.js version_name:1.3.5 build_number:git
+    npx @siliconjungles/rn-scripts increment version_name:1.3.5 build_number:123456
     
-    node ~/Documents/SiliconJungles/git/scripts/increment_android_ios_version/test.js
-
-version / build
-
-    node ../../scripts/increment_android_ios_version/index.js version_src:package.json
+    npx @siliconjungles/rn-scripts increment version_src:package.json build_src:git
     
 params:
     
