@@ -5,6 +5,12 @@ export default class Shell {
 		return spawnSync(command, args).stdout.toString().replace('\n', '')
 	}
 
+	static sh_array(command: string, args?: string[]): string[] {
+		let array = spawnSync(command, args).stdout.toString().split('\n')
+		array.pop()
+		return array
+	}
+
 	static sh_i(command: string, args?: string[]): number {
 		return parseInt(spawnSync(command, args).stdout.toString())
 	}
