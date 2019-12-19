@@ -1,24 +1,43 @@
 import {spawn, spawnSync, SpawnSyncOptions, SpawnSyncReturns} from 'child_process'
 
 export default class Shell {
+
+	/**
+	 * Executes shell command and returns output as a string
+	 * Also removes trailing newline.
+	 */
 	static sh_s(command: string, args?: string[]): string {
 		return spawnSync(command, args).stdout.toString().replace('\n', '')
 	}
 
+	/**
+	 * Executes shell command and returns each line output as part of a string array
+	 * Also removes last line
+	 */
 	static sh_array(command: string, args?: string[]): string[] {
 		let array = spawnSync(command, args).stdout.toString().split('\n')
 		array.pop()
 		return array
 	}
 
+	/**
+	 * Executes shell command and returns output as a number
+	 */
 	static sh_i(command: string, args?: string[]): number {
 		return parseInt(spawnSync(command, args).stdout.toString())
 	}
 
+	/**
+	 * Returns the current directory as a string
+	 */
 	static pwd(): string {
 		return this.sh_s('pwd')
 	}
 
+	/**
+	 * @experimental
+	 * Similar to sh() but arguments are sent together as one combined string instead of an array
+	 */
 	static async sh_2(command: string, options?: SpawnSyncOptions): Promise<null> {
 		let a = command.split(' ')
 		let b = a[0]
@@ -31,6 +50,9 @@ export default class Shell {
 		return this.sh(b, c, options)
 	}
 
+	/**
+	 * Executes an async shell command while piping output to std:io
+	 */
 	static async sh(command: string, args: string[], options?: SpawnSyncOptions): Promise<null> {
 		let process = spawn(command, args, {...options, ...{stdio: 'inherit'}})
 		return new Promise<any>((resolve, reject) => {
@@ -40,6 +62,9 @@ export default class Shell {
 		})
 	}
 
+	/**
+	 * @experimental - Please don't use this
+	 */
 	static async dir_sh(location: 'android' | 'ios' | 'root', command: string): Promise<null> {
 		let pwd = this.pwd()
 		switch(location) {
@@ -79,6 +104,10 @@ export default class Shell {
 		}
 	}
 
+	/**
+	 * @experimental - Please don't use this
+	 * Passes in a relative path and attempts to locate it by searching current directory, child directory, or ancestors
+	 */
 	static find_path(relative_path: string): string {
 		let pwd = Shell.pwd()
 
@@ -118,6 +147,10 @@ export default class Shell {
 		}
 	}
 
+	/**
+	 * Returns true if this is the root of a node directory
+	 * (root node directories are determined by the presence of package.json)
+	 */
 	static is_root_node_dir(options?: SpawnSyncOptions): boolean {
 		return spawnSync('test', ['-f', 'package.json'], options).status === 0
 	}
