@@ -41,7 +41,7 @@ const Tools_1 = __importDefault(require("./lib/Tools"));
             // await Build.build_bundle(password)
             // console.log(Shell.find_path('(root)'))
             // console.log(Project.write_xcode(1231231,'2.3.3-release'))
-            console.log(Tools_1.default.version_from_git());
+            console.log(Tools_1.default.version_from_git('develop'));
             process.exit(0);
         }
         catch (e) {

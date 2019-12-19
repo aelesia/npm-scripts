@@ -16,7 +16,7 @@ try {
 	let version_suffix: string | undefined = Arg.v_null('version_suffix')
 
 
-	build_number = (build_src === 'git') ? Tools.version_from_git() : Arg.v_number_null('build_number')
+	build_number = (build_src === 'git') ? Tools.version_from_git('develop') : Arg.v_number_null('build_number')
 	version_name = (version_src === 'package.json') ? Tools.version_from_package() : Arg.v_null('version_name')
 	version_name = version_suffix ? `${version_name}-${version_suffix}` : version_name
 
@@ -27,7 +27,7 @@ try {
 		Project.write_xcode(xcode_path, build_number, version_name)
 	}
 	process.exit(0)
-} catch(e) {
+} catch (e) {
 	// console.error(e.stack)
 	console.error('ERROR: ' + e.message)
 	process.exit(1)
