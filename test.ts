@@ -36,7 +36,7 @@ import Build from "./lib/Build"
 		// await Build.build_bundle(password)
 		// console.log(Shell.find_path('(root)'))
 		// console.log(Project.write_xcode(1231231,'2.3.3-release'))
-		console.log(Tools.version_from_git())
+		// console.log(Tools.version_from_git())
 		process.exit(0)
 	} catch(e) {
 		console.log('ERROR: ' + e.message)

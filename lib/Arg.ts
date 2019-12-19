@@ -1,12 +1,22 @@
 import {spawn, spawnSync, SpawnSyncOptions, SpawnSyncReturns} from 'child_process'
 
 export default class Arg {
+
+	static command_enum(accepted_values: string[]): string {
+		let command = process.argv[2]
+		let abc = accepted_values.find((it)=>{
+			return it.toLowerCase() === command?.toLowerCase() ?? false
+		})
+		if (abc) return command
+		else throw Error(`Invalid command: ${command}. Accepted commands: ${accepted_values}`)
+	}
+
 	static v_enum(key: string, accepted_values: string[]): string {
 		let value = this.v(key)
 		let abc = accepted_values.find((it)=>{
 			return it.toLowerCase() === value.toLowerCase()
 		})
-		if (value) return value
+		if (abc) return value
 		else throw Error(`Invalid value: ${value}. Accepted values: ${accepted_values}`)
 	}
 

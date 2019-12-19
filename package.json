@@ -2,20 +2,19 @@
   "name": "@siliconjungles/rn-scripts",
   "version": "0.1.0",
   "description": "General scripts for React Native",
-	"main": "dist/index.js",
+  "bin": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-		"prepublish": "tsc"
-	},
+    "prepublish": "tsc"
+  },
   "author": "aelesia, jaslyn@siliconjungles",
   "license": "MIT",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "@types/node": "^12.12.7",
     "eslint": "^6.6.0",
     "typescript": "^3.7.2",
-		"@typescript-eslint/eslint-plugin": "^2.7.0",
-		"@typescript-eslint/parser": "^2.7.0"
+    "@typescript-eslint/eslint-plugin": "^2.7.0",
+    "@typescript-eslint/parser": "^2.7.0"
   }
 }

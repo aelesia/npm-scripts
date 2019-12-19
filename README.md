@@ -30,3 +30,12 @@ params:
         version_name?: string 
         // 2.1.5
     }
+
+
+# npm
+
+## local testing
+
+    npm link
+    
+    npx @siliconjungles/rn-scripts
