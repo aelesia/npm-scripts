@@ -1,6 +1,6 @@
-import Arg from '../lib/Arg'
-import Project from '../lib/Project'
-import Tools from '../lib/Tools'
+import Arg from './lib/Arg'
+import Project from './lib/Project'
+import Tools from './lib/Tools'
 
 // TODO: Split increment into build_number & version_name
 export function increment(): void {
