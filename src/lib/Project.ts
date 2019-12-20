@@ -3,17 +3,22 @@ import Shell from './Shell'
 
 export default class Project {
 	static write_gradle(file_path: string, build_number?: number, version_name?: string) {
-		let file = fs.readFileSync(file_path, 'utf-8')
+		let original = fs.readFileSync(file_path, 'utf-8')
+		let file = original
+
 		if (build_number)
 			file = file.replace(/versionCode ([\d]+)?/g, `versionCode ${build_number}`)
 		if (version_name)
 			file = file.replace(/versionName (("[\d\.\w-]*)+)?/g, `versionName "${version_name}"`)
 		fs.writeFileSync(file_path, file, 'utf-8')
 
-		console.log(`Updated ${file_path} -`
-			+ (build_number ? ' versionCode:'+build_number : '')
-			+ (version_name ? ' versionName:'+version_name : '')
-		)
+		if (original !== file) {
+			fs.writeFileSync(file_path, file, 'utf-8')
+			console.log(`Updated ${file_path} -`
+				+ (build_number ? ' versionCode:' + build_number : '')
+				+ (version_name ? ' versionName:' + version_name : '')
+			)
+		}
 	}
 
 	static write_xcode(project_name: string, build_number?: number, version_name?: string) {
@@ -27,43 +32,53 @@ export default class Project {
 	}
 
 	private static write_xcode_project(file_path: string, build_number?: number, version_name?: string) {
-		let file = fs.readFileSync(file_path, 'utf-8')
+		let original = fs.readFileSync(file_path, 'utf-8')
+		let file = original
+
 		if (build_number)
 			file = file.replace(/CURRENT_PROJECT_VERSION = .*;/g, `CURRENT_PROJECT_VERSION = ${build_number};`)
 		if (version_name)
 			file = file.replace(/MARKETING_VERSION = .*;/g, `MARKETING_VERSION = ${version_name};`)
-		fs.writeFileSync(file_path, file, 'utf-8')
 
-		console.log(`Updated ${file_path} -`
-            + (build_number ? ' CURRENT_PROJECT_VERSION:'+build_number : '')
-            + (version_name ? ' MARKETING_VERSION:'+version_name : '')
-		)
+		if (original !== file) {
+			fs.writeFileSync(file_path, file, 'utf-8')
+			console.log(`Updated ${file_path} -`
+				+ (build_number ? ' CURRENT_PROJECT_VERSION:' + build_number : '')
+				+ (version_name ? ' MARKETING_VERSION:' + version_name : '')
+			)
+		}
 	}
 
 	private static write_xcode_info(file_path: string, build_number?: number, version_name?: string) {
-		let file = fs.readFileSync(file_path, 'utf-8')
-		if (build_number) {
+		let original = fs.readFileSync(file_path, 'utf-8')
+		let file = original
+
+		if (build_number)
 			file = Project.set_plist_string(file, 'CFBundleVersion', build_number.toString())
-		}
-		if (version_name) {
+		if (version_name)
 			file = Project.set_plist_string(file, 'CFBundleShortVersionString', version_name)
+
+		if (original !== file) {
+			fs.writeFileSync(file_path, file, 'utf-8')
+			console.log(`Updated ${file_path} - `
+				+ (build_number ? ' CFBundleVersion:' + build_number : '')
+				+ (version_name ? ' CFBundleShortVersionString:' + version_name : '')
+			)
 		}
-		fs.writeFileSync(file_path, file, 'utf-8')
-		console.log(`Updated ${file_path}`)
 	}
 
 	private static find_all_info_plist_paths(project: string): string[] {
 		let paths = Shell.sh_array('find', [`ios/${project}*`, '-type', 'f', '-name', 'Info.plist'], {shell:true})
 		if (paths.length!=0)
 			return paths
-		throw Error('XCode Info.plist cannot be located. Please specify with the params "project_name:[name]"')
+		throw Error(`XCode Info.plist cannot be located at ios/${project}. Please specify with the params "project_name:[name]"`)
 	}
 
 	static find_xcode_proj(project: string): string {
 		let path = Shell.sh_s('find', [`ios/${project}*`, '-type', 'f', '-name', 'project.pbxproj'], {shell:true})
 		if (path.includes('project.pbxproj'))
 			return path
-		throw Error('XCode project.pbxproj cannot be located. Please specify with the params "project_name:[name]"')
+		throw Error(`XCode project.pbxproj cannot be located at ios/${project}. Please specify with the params "project_name:[name]"`)
 	}
 
 	private static set_plist_string(str: string, key: string, value: string): string {
