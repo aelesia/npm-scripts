@@ -1,21 +1,9 @@
 import Build from './lib/Build'
 import Arg from './lib/Arg';
 
-(async function() {
-	try {
-		let password: string = Arg.v('password')
+export async function build_android(): Promise<void> {
+	let params: object = Arg.v_json('params')
+	let type: any = Arg.v_enum('type', ['apk', 'aab']) // HACK: Should not be 'any'
 
-		await Build.build_bundle(password)
-		process.exit(0)
-	} catch(e) {
-		if (e) {
-			console.log('ERROR: ' + e.message)
-		}
-		process.exit(1)
-	}
-}())
-
-
-function build_android(): void {
-
+	await Build.android({params, type})
 }

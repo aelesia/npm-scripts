@@ -63,7 +63,7 @@ export default class Shell {
 	}
 
 	/**
-	 * @experimental - Please don't use this
+	 * @deprecated - Please don't use this
 	 */
 	static async dir_sh(location: 'android' | 'ios' | 'root', command: string): Promise<null> {
 		let pwd = this.pwd()
@@ -105,7 +105,7 @@ export default class Shell {
 	}
 
 	/**
-	 * @experimental - Please don't use this
+	 * @deprecated - Please don't use this
 	 * Passes in a relative path and attempts to locate it by searching current directory, child directory, or ancestors
 	 */
 	static find_path(relative_path: string): string {
