@@ -6,16 +6,16 @@ export default class Shell {
 	 * Executes shell command and returns output as a string
 	 * Also removes trailing newline.
 	 */
-	static sh_s(command: string, args?: string[]): string {
-		return spawnSync(command, args).stdout.toString().replace('\n', '')
+	static sh_s(command: string, args?: string[], options?: SpawnSyncOptions): string {
+		return spawnSync(command, args, options).stdout.toString().replace('\n', '')
 	}
 
 	/**
 	 * Executes shell command and returns each line output as part of a string array
 	 * Also removes last line
 	 */
-	static sh_array(command: string, args?: string[]): string[] {
-		let array = spawnSync(command, args).stdout.toString().split('\n')
+	static sh_array(command: string, args?: string[], options?: SpawnSyncOptions): string[] {
+		let array = spawnSync(command, args, options).stdout.toString().split('\n')
 		array.pop()
 		return array
 	}
@@ -23,8 +23,8 @@ export default class Shell {
 	/**
 	 * Executes shell command and returns output as a number
 	 */
-	static sh_i(command: string, args?: string[]): number {
-		return parseInt(spawnSync(command, args).stdout.toString())
+	static sh_i(command: string, args?: string[], options?: SpawnSyncOptions): number {
+		return parseInt(spawnSync(command, args, options).stdout.toString())
 	}
 
 	/**

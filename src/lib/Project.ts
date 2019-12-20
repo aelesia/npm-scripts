@@ -16,12 +16,14 @@ export default class Project {
 		)
 	}
 
-	static write_xcode(xcode_path: string, build_number?: number, version_name?: string) {
-		let info_files_path = Project.find_all_info_plist_paths()
+	static write_xcode(project_name: string, build_number?: number, version_name?: string) {
+		let info_files_path = Project.find_all_info_plist_paths(project_name)
+		let project_path = Project.find_xcode_proj(project_name)
+
 		info_files_path.forEach(file_path=>{
 			this.write_xcode_info(file_path, build_number, version_name)
 		})
-		this.write_xcode_project(xcode_path, build_number, version_name)
+		this.write_xcode_project(project_path, build_number, version_name)
 	}
 
 	private static write_xcode_project(file_path: string, build_number?: number, version_name?: string) {
@@ -50,16 +52,18 @@ export default class Project {
 		console.log(`Updated ${file_path}`)
 	}
 
-	private static find_all_info_plist_paths(): string[] {
-		return Shell.sh_array('find', ['ios', '-type', 'f', '-name', 'Info.plist'])
+	private static find_all_info_plist_paths(project: string): string[] {
+		let paths = Shell.sh_array('find', [`ios/${project}*`, '-type', 'f', '-name', 'Info.plist'], {shell:true})
+		if (paths.length!=0)
+			return paths
+		throw Error('XCode Info.plist cannot be located. Please specify with the params "project_name:[name]"')
 	}
 
-	static find_xcode_proj(): string {
-		let path = Shell.sh_s('find', ['ios', '-type', 'f', '-name', 'project.pbxproj'])
+	static find_xcode_proj(project: string): string {
+		let path = Shell.sh_s('find', [`ios/${project}*`, '-type', 'f', '-name', 'project.pbxproj'], {shell:true})
 		if (path.includes('project.pbxproj'))
 			return path
-		else
-			throw Error('XCode project.pbxproj cannot be located. Please specify with the params "xcode_path:[path]"')
+		throw Error('XCode project.pbxproj cannot be located. Please specify with the params "project_name:[name]"')
 	}
 
 	private static set_plist_string(str: string, key: string, value: string): string {

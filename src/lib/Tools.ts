@@ -34,4 +34,13 @@ export default class Tools {
 		return pkg.version
 	}
 
+	static project_name_from_package(): string {
+		let file = fs.readFileSync('package.json', 'utf-8')
+		let pkg = JSON.parse(file)
+		if (!pkg.name) {
+			throw Error('No project name defined in package.json')
+		}
+		return pkg.name
+	}
+
 }
