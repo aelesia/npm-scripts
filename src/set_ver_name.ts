@@ -3,7 +3,8 @@ import Project from './lib/Project'
 import Tools from './lib/Tools'
 
 export function set_ver_name(): void {
-	let xcode_path: string 			= 	Arg.v_null('xcode_path') || Project.find_xcode_proj()
+	// let xcode_path: string 			= 	Arg.v_null('xcode_path') || Project.find_xcode_proj()
+	let project_name: string            = Arg.v_null('project_name') || Tools.project_name_from_package()
 	let gradle_path: string 		= 	Arg.v_null('gradle_path') || 'android/app/build.gradle'
 	let platform: string 			= 	Arg.v_enum_null('platform', ['android', 'ios', 'both']) || 'both'
 	let src: string | undefined 	= 	Arg.v_enum_null('src', ['package.json'])
@@ -17,6 +18,6 @@ export function set_ver_name(): void {
 		Project.write_gradle(gradle_path, undefined, ver_name)
 	}
 	if (platform !== 'android') {
-		Project.write_xcode(xcode_path, undefined, ver_name)
+		Project.write_xcode(project_name, undefined, ver_name)
 	}
 }
