@@ -13,7 +13,7 @@ export default class Tools {
 		return dev_commits * 1000 + branch_commits_from_dev
 	}
 
-	/**
+	/**  
 	 * Calculates and returns a version number based on epoch timestamp / 10
 	 *   Note: Timestamp is divided by 10 to extend usage until year 2600 due to Android maximum BUILD_NUMBER = 2.1B
 	 *         This means that 2 parallel builds may conflict if they start within 10 seconds of one another
