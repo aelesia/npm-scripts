@@ -7,4 +7,4 @@ export async function build_android(): Promise<void> {
 
 	await Build.android({params, type})
 }
-asd
+
