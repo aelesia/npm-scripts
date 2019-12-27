@@ -8,6 +8,7 @@ interface Options {
 
 export default class Build {
 	static async android(opt: Options) {
+		console.log(Shell.pwd())
 		await Shell.dir_sh('root', 'npx jetifier')
 		await Shell.sh_2(`./gradlew clean ${this.parse_type(opt.type)}Release${this.parse_gradle_params(opt.params)}`,
 			{cwd:Shell.find_path('android')})

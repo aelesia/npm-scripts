@@ -1,6 +1,6 @@
 {
   "name": "@siliconjungles/rn-scripts",
-  "version": "0.0.0-8",
+  "version": "0.0.0-9",
   "description": "Scripts for React Native CI used by Silicon Jungles",
   "bin": "dist/index.js",
   "scripts": {
@@ -10,7 +10,9 @@
   "author": "aelesia",
   "repository": "https://github.com/jaslyn-siliconjungles/rn-scripts",
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+		"jetifier": "latest"
+	},
   "devDependencies": {
     "@types/node": "^12.12.7",
     "eslint": "^6.6.0",
