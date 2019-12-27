@@ -13,7 +13,7 @@ export async function post(params: DiscordParams) {
 		title: params.title,
 		description: params.description,
 		url: params.url,
-		color: params.status && params.status === 'success' ? 3066993 : 15158332,
+		color: map_color(params.status),
 		fields: map_fields(params.fields)
 	}]}
 	await Shell.sh('curl', [
@@ -23,10 +23,20 @@ export async function post(params: DiscordParams) {
 }
 
 function map_fields(fields: any): {name:string, value:string}[] {
+	if (!fields) return []
 	return Object.keys(fields).map(k=> {
 		return {
 			name: k,
 			value: fields[k]
 		}
 	})
+}
+
+function map_color(status?: 'success' | 'error'): number {
+	if ('success' === status) {
+		return 3066993
+	} else if ('error' === status) {
+		return 15158332
+	}
+	return 7374810
 }
