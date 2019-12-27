@@ -8,7 +8,6 @@ interface Options {
 
 export default class Build {
 	static async android(opt: Options) {
-		console.log(Shell.pwd())
 		await Shell.dir_sh('root', 'npx jetifier')
 		await Shell.sh_2(`./gradlew clean ${this.parse_type(opt.type)}Release${this.parse_gradle_params(opt.params)}`,
 			{cwd:Shell.find_path('android')})
@@ -17,8 +16,8 @@ export default class Build {
 	/*______________________________________________________________________*/
 
 	private static parse_type(type: string): string {
-		if ('apk'===type.toLowerCase()) return 'build'
-		else if ('aab'===type.toLowerCase()) return 'assemble'
+		if ('apk'===type.toLowerCase()) return 'assemble'
+		else if ('aab'===type.toLowerCase()) return 'bundle'
 		else throw Error(`IllegalArgumentException: ${type} is not valid`)
 	}
 

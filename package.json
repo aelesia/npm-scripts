@@ -11,8 +11,8 @@
   "repository": "https://github.com/jaslyn-siliconjungles/rn-scripts",
   "license": "MIT",
   "dependencies": {
-		"jetifier": "latest"
-	},
+    "jetifier": "latest"
+  },
   "devDependencies": {
     "@types/node": "^12.12.7",
     "eslint": "^6.6.0",

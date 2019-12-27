@@ -24,6 +24,6 @@ import {notify} from './src/notify';
 	}
 
 } catch (e) {
-	console.error(e.message)
+	console.error(e?.message)
 	process.exit(1)
 }}())

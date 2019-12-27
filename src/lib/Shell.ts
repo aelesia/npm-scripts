@@ -57,7 +57,7 @@ export default class Shell {
 		let process = spawn(command, args, {...options, ...{stdio: 'inherit'}})
 		return new Promise<any>((resolve, reject) => {
 			process.on('exit', (code)=>{
-				code==0 ? resolve() : reject()
+				code==0 ? resolve() : reject(new Error('Process exited with code!=0'))
 			})
 		})
 	}
