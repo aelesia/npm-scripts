@@ -3,12 +3,12 @@ import Shell from './Shell'
 
 interface Options {
 	type: 'apk' | 'aab'
-	params: object
+	params?: object
 }
 
 export default class Build {
 	static async android(opt: Options) {
-		await Shell.dir_sh('root', 'npx jetify')
+		await Shell.dir_sh('root', 'npx jetifier')
 		await Shell.sh_2(`./gradlew clean ${this.parse_type(opt.type)}Release${this.parse_gradle_params(opt.params)}`,
 			{cwd:Shell.find_path('android')})
 	}
@@ -21,8 +21,9 @@ export default class Build {
 		else throw Error(`IllegalArgumentException: ${type} is not valid`)
 	}
 
-	private static parse_gradle_params(params: object): string {
+	private static parse_gradle_params(params?: object): string {
 		let str = ''
+		if (params==null) return str
 		Object.keys(params).forEach(key => {
 			// @ts-ignore
 			let value = params[key]
