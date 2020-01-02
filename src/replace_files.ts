@@ -13,11 +13,12 @@ export function replace_files(): void {
 
 function parse(path: string): [string, string][] {
 	let file = fs.readFileSync(path, 'utf-8')
-	let row = file.split('\n')
+	let row = file.trim().split('\n')
 	return row.map(it => {
-		let file1 = it.split('=>')[0]
-		let file2 = it.split('=>')[1]
-		return [file1, file2]
+		let files = it.split(/[ ]*=>[ ]*/g)
+		if (files.length!==2)
+			throw Error(`Invalid syntax in ${path}. Please use the format "file1 => file2"`)
+		return [files[0], files[1]]
 	})
 }
 

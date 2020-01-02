@@ -51,10 +51,20 @@ export default class Arg {
 	static v(key: string): string {
 		let value: string | number | boolean | null = null
 		process.argv.forEach((arg: string, index: number, array) => {
-			let k = arg.split('=')[0]
-			let v = arg.split('=')[1]
-			if (k.toLowerCase() === key) {
-				value = v
+			if (arg.includes('\n')) {
+				arg.split('\n').forEach(arg => {
+					let k = arg.split('=')[0]
+					let v = arg.split('=')[1]
+					if (k.toLowerCase().trim() === key) {
+						value = v
+					}
+				})
+			} else {
+				let k = arg.split('=')[0]
+				let v = arg.split('=')[1]
+				if (k.toLowerCase() === key) {
+					value = v
+				}
 			}
 		})
 		if (value) return value
@@ -67,10 +77,20 @@ export default class Arg {
 	static v_null(key: string): string | undefined {
 		let value: string | number | boolean | undefined = undefined
 		process.argv.forEach((arg: string, index: number, array) => {
-			let k = arg.split('=')[0]
-			let v = arg.split('=')[1]
-			if (k.toLowerCase() === key) {
-				value = v
+			if (arg.includes('\n')) {
+				arg.split('\n').forEach(arg => {
+					let k = arg.split('=')[0]
+					let v = arg.split('=')[1]
+					if (k.toLowerCase().trim() === key) {
+						value = v
+					}
+				})
+			} else {
+				let k = arg.split('=')[0]
+				let v = arg.split('=')[1]
+				if (k.toLowerCase() === key) {
+					value = v
+				}
 			}
 		})
 		return value
@@ -144,7 +164,14 @@ export default class Arg {
 	 */
 	static v_json(key: string): any {
 		let value = this.v(key)
-		let correctJson = value.replace(/(['"])?([a-z0-9A-Z_@]+)(['"])?/g, '"$2"')
+		let correctJson = value.replace(/(['"])?([a-z0-9A-Z_@\-/.]+)(['"])?/g, '"$2"')
+		return JSON.parse(correctJson)
+	}
+
+	static v_json_null(key: string): object | undefined {
+		let value = this.v_null(key)
+		if (value == null) return undefined
+		let correctJson = value.replace(/(['"])?([a-z0-9A-Z_@\-/.]+)(['"])?/g, '"$2"')
 		return JSON.parse(correctJson)
 	}
 }
