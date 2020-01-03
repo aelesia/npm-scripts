@@ -11,7 +11,7 @@ export function set_build_num(): void {
 	let base_num: number | undefined	= Arg.v_number_null('base_num')
 
 	let build_number: number
-	if ('git' === src)  		build_number = Tools.version_from_git('develop', offset)
+	if ('git' === src)  		build_number = Tools.version_from_git('origin/develop', offset)
 	else if ('time' === src) 	build_number = Tools.version_from_epoch(offset)
 	else 							build_number = Arg.v_number('num')
 	if (base_num) 					build_number += base_num
