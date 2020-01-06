@@ -1,6 +1,6 @@
 {
   "name": "@siliconjungles/rn-scripts",
-  "version": "0.0.0-35",
+  "version": "0.0.0-37",
   "description": "Scripts for React Native CI used by Silicon Jungles",
   "bin": "dist/index.js",
   "scripts": {
@@ -11,6 +11,7 @@
   "repository": "https://github.com/jaslyn-siliconjungles/rn-scripts",
   "license": "MIT",
   "dependencies": {
+    "aws-sdk": "^2.597.0",
     "qr-image": "^3.2.0",
     "request": "^2.88.0"
   },

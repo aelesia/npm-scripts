@@ -10,6 +10,10 @@ export default class Shell {
 		return spawnSync(command, args, options).stdout.toString().replace('\n', '')
 	}
 
+	static echo(text: string): void {
+		spawnSync('echo', ['text'])
+	}
+
 	/**
 	 * Executes shell command and returns each line output as part of a string array
 	 * Also removes last line

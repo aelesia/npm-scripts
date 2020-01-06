@@ -4,7 +4,7 @@ const request = require('request')
 type DiscordParams = {
 	webhook: string,
 	title: string,
-	qr_url: boolean,
+	qr_code?: string,
 	description?: string,
 	url?: string,
 	status?: 'success' | 'error'
@@ -23,9 +23,9 @@ export async function post(params: DiscordParams): Promise<void> {
 			fields: map_fields(params.fields)
 		}]
 	})
-	if (params.qr_url && params.url) {
+	if (params.qr_code) {
 		p['files'] = {
-			value: qr_code(params.url),
+			value: qr_code(params.qr_code),
 			options: {
 				filename: 'url.png',
 				contentType: 'image/png'

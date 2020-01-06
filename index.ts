@@ -6,11 +6,12 @@ import {set_build_num} from './src/set_build_num'
 import {replace_files} from './src/replace_files'
 import {discord} from './src/discord'
 import {test} from './src/test'
-import {get_build_number, get_version_name} from './src/tools';
+import {get_build_number, get_version_name} from './src/tools'
+import {upload} from './src/s3';
 
 (async function() {	try {
 
-	let command = Arg.v_first_enum(['build_android', 'set_ver_name', 'set_build_num', 'replace_files', 'discord', 'get_version_name', 'get_build_no', 'test'])
+	let command = Arg.v_first_enum(['build_android', 'set_ver_name', 'set_build_num', 'replace_files', 'discord', 'get_version_name', 'get_build_no', 'test', 'upload'])
 	if ('build_android' === command) {
 		await build_android()
 	} else if ('set_ver_name' === command) {
@@ -25,6 +26,8 @@ import {get_build_number, get_version_name} from './src/tools';
 		await get_build_number()
 	} else if ('get_version_name' === command) {
 		await get_version_name()
+	} else if ('upload' === command) {
+		await upload()
 	} else if ('test' === command) {
 		await test()
 	} else {
@@ -32,6 +35,6 @@ import {get_build_number, get_version_name} from './src/tools';
 	}
 
 } catch (e) {
-	console.error(e?.message)
+	console.error((e?.name ?? 'Error') + ': ' + e?.message)
 	process.exit(1)
 }}())

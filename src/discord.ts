@@ -8,7 +8,7 @@ export async function discord(): Promise<void> {
 	let status = Arg.v_enum_null('status', ['success', 'error']) as 'success' | 'error'
 	let url = Arg.v_null('url')
 	let fields = Arg.v_json_null('fields')
-	let qr_url = Arg.v_boolean_null('qr_url') || false
+	let qr_code = Arg.v_null('qr_code')
 
 	await post({
 		webhook,
@@ -17,6 +17,6 @@ export async function discord(): Promise<void> {
 		status,
 		url,
 		fields,
-		qr_url
+		qr_code
 	})
 }
