@@ -27,8 +27,8 @@ export async function commit_tag(): Promise<void> {
 async function commit(email: string, name: string, message: string, repo: string, branch: string): Promise<void> {
 	let has_commits = Shell.sh_s('git', ['diff-index', 'HEAD'])
 	if (has_commits) {
-		await Shell.sh_2(`git config user.email ${email}`)
-		await Shell.sh_2(`git config user.name "${name}"`)
+		await Shell.sh('git', ['config', 'user.email', email])
+		await Shell.sh('git', ['config', 'user.name', name])
 		await Shell.sh('git', ['commit', '-m', message, '-a'])
 		await Shell.sh('git', ['push', repo, `HEAD:${branch}`])
 		console.log(`Committed to ${branch}`)
@@ -38,8 +38,8 @@ async function commit(email: string, name: string, message: string, repo: string
 }
 
 async function tag(email: string, name: string, tag: string, message: string, repo: string): Promise<void> {
-	await Shell.sh_2(`git config user.email ${email}`)
-	await Shell.sh_2(`git config user.name "${name}"`)
+	await Shell.sh('git', ['config', 'user.email', email])
+	await Shell.sh('git', ['config', 'user.name', name])
 	await Shell.sh('git', ['tag', '-a', tag, '-m', message])
 	await Shell.sh('git', ['push', repo, tag])
 	console.log(`Committed tag: ${tag}`)
