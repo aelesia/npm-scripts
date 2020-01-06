@@ -7,11 +7,12 @@ import {replace_files} from './src/replace_files'
 import {discord} from './src/discord'
 import {test} from './src/test'
 import {get_build_number, get_version_name} from './src/tools'
-import {upload} from './src/s3';
+import {upload} from './src/s3'
+import {commit_all, commit_tag} from './src/git';
 
 (async function() {	try {
 
-	let command = Arg.v_first_enum(['build_android', 'set_ver_name', 'set_build_num', 'replace_files', 'discord', 'get_version_name', 'get_build_no', 'test', 'upload'])
+	let command = Arg.v_first_enum(['build_android', 'set_ver_name', 'set_build_num', 'replace_files', 'discord', 'get_version_name', 'get_build_no', 'test', 'upload', 'commit_all', 'commit_tag'])
 	if ('build_android' === command) {
 		await build_android()
 	} else if ('set_ver_name' === command) {
@@ -28,6 +29,10 @@ import {upload} from './src/s3';
 		await get_version_name()
 	} else if ('upload' === command) {
 		await upload()
+	} else if ('commit_all' === command) {
+		await commit_all()
+	} else if ('commit_tag' === command) {
+		await commit_tag()
 	} else if ('test' === command) {
 		await test()
 	} else {
