@@ -29,8 +29,8 @@ async function commit(email: string, name: string, message: string, repo: string
 	if (has_commits) {
 		await Shell.sh_2(`git config user.email ${email}`)
 		await Shell.sh_2(`git config user.name "${name}"`)
-		await Shell.sh_2(`git commit -m "${message}" -a`)
-		await Shell.sh_2(`git push "${repo}" HEAD:${branch}`)
+		await Shell.sh('git', ['commit', '-m', message, '-a'])
+		await Shell.sh('git', ['push', repo, `HEAD:${branch}`])
 		console.log(`Committed to ${branch}`)
 	} else {
 		console.log('No changes to commit')
@@ -40,9 +40,8 @@ async function commit(email: string, name: string, message: string, repo: string
 async function tag(email: string, name: string, tag: string, message: string, repo: string): Promise<void> {
 	await Shell.sh_2(`git config user.email ${email}`)
 	await Shell.sh_2(`git config user.name "${name}"`)
-	await Shell.sh_2(`git tag -a ${tag} -m "${message}"`)
-	await Shell.sh_2(`git commit -m "${message}" -a`)
-	await Shell.sh_2(`git push "${repo}" ${tag}`)
+	await Shell.sh('git', ['tag', '-a', tag, '-m', message])
+	await Shell.sh('git', ['push', repo, tag])
 	console.log(`Committed tag: ${tag}`)
 }
 
