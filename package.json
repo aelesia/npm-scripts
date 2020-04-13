@@ -1,6 +1,6 @@
 {
   "name": "@siliconjungles/rn-scripts",
-  "version": "0.0.0-41",
+  "version": "0.0.0-42",
   "description": "Scripts for React Native CI used by Silicon Jungles",
   "bin": "dist/index.js",
   "scripts": {

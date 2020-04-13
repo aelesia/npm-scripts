@@ -53,15 +53,15 @@ export default class Arg {
 		process.argv.forEach((arg: string, index: number, array) => {
 			if (arg.includes('\n')) {
 				arg.split('\n').forEach(arg => {
-					let k = arg.split('=')[0]
-					let v = arg.split('=')[1]
+					let [k, ...vs] = arg.split('=')
+					let v = vs.join('=')
 					if (k.toLowerCase().trim() === key) {
 						value = v
 					}
 				})
 			} else {
-				let k = arg.split('=')[0]
-				let v = arg.split('=')[1]
+				let [k, ...vs] = arg.split('=')
+				let v = vs.join('=')
 				if (k.toLowerCase() === key) {
 					value = v
 				}
@@ -79,15 +79,15 @@ export default class Arg {
 		process.argv.forEach((arg: string, index: number, array) => {
 			if (arg.includes('\n')) {
 				arg.split('\n').forEach(arg => {
-					let k = arg.split('=')[0]
-					let v = arg.split('=')[1]
+					let [k, ...vs] = arg.split('=')
+					let v = vs.join('=')
 					if (k.toLowerCase().trim() === key) {
 						value = v
 					}
 				})
 			} else {
-				let k = arg.split('=')[0]
-				let v = arg.split('=')[1]
+				let [k, ...vs] = arg.split('=')
+				let v = vs.join('=')
 				if (k.toLowerCase() === key) {
 					value = v
 				}
